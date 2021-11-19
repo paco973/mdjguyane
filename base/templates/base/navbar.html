@@ -1,0 +1,98 @@
+<div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+</div>
+
+<header class="site-navbar site-navbar-target" role="banner">
+
+    <div class="container">
+        <div class="row align-items-center position-relative">
+
+            <div class="col-3 ">
+                <div class="site-logo">
+                    <a href="{% url 'home' %}">
+                        <img src="../../static/img/IMG_4092.PNG" style="width: 50%">
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-9  text-right">
+                <span class="d-inline-block d-lg-none"><a href="#"
+                                                          class="text-white site-menu-toggle js-menu-toggle py-5 text-white"><span
+                        class="icon-menu h3 text-white"></span></a></span>
+                <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                    <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                        {% if request.path == '/' %}
+                        <li class="active"><a href="{% url 'home' %}" class="nav-link text-info">Accueil</a></li>
+                        {% else %}
+                        <li><a href="{% url 'home' %}" class="nav-link">Accueil</a></li>
+                        {% endif %}
+
+<!--
+                        {% if request.path == '/member/' %}
+                        <li class="active"><a href="{% url 'member' %}" class="nav-link">Aides</a></li>
+                        {% else %}
+                        <li><a href="{% url 'member' %}" class="nav-link">Aides</a></li>
+                        {% endif %}
+
+
+                        {% if request.path == '/a' %}
+                        <li class="active"><a href="barber-shop.html" class="nav-link">Shop</a></li>
+                        {% else %}
+                        <li><a href="barber-shop.html" class="nav-link">Shop</a></li>
+                        {% endif %}
+                        -->
+
+
+                        {% if request.path == '/about/' %}
+                        <li class="active"><a href="{% url 'about' %}" class="nav-link">À propos</a></li>
+                        {% else %}
+                        <li><a href="{% url 'about' %}" class="nav-link">À propos</a></li>
+                        {% endif %}
+
+                        {% if request.path == '/student/'%}
+                            <li>
+                                <div class="dropdown">
+                                    <a style="color: #FFFFFF" class="nav-link dropdown-toggle" href="#" role="button" id="deroulanta"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rejoindre</a>
+                                    <div class="dropdown-menu" aria-labelledby="deroulanta">
+                                        <a class="dropdown-item" href="{% url 'member' %}">Nous rejoindre</a>
+                                        <a class="dropdown-item text-black" href="{% url 'student' %}">Rejoindre le réseau étudiant</a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li style="color: white">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" style="color: white"  href="#"  role="button" id="deroulanta1"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rejoindre</a>
+                                    <div class="dropdown-menu" aria-labelledby="deroulanta1">
+                                        <a class="dropdown-item" href="{% url 'member' %}">Nous rejoindre</a>
+                                        <a class="dropdown-item" href="{% url 'student' %}">Rejoindre le réseau étudiant</a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if request.path == '/project/' %}
+                        <li class="active"><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
+                        {% else %}
+                        <li><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
+                        {% endif %}
+
+                        {% if request.path == '/contact/' %}
+                        <li class="active"><a href="{% url 'contact' %}" class="nav-link">Contacte</a></li>
+                        {% else %}
+                        <li><a href="{% url 'contact' %}" class="nav-link">Contacte</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+</header>

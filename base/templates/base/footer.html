@@ -1,0 +1,48 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <img src="../../static/img/img_2.png" alt="Image" class="img-fluid mb-5">
+                <h2 class="footer-heading mb-3 text-white">À Propos</h2>
+                <p style="color: white">Association destinée à venir en aide, accompagner et rassembler les jeunes de Guyane ! </p>
+            </div>
+            <div class="col-lg-8 ml-auto">
+                <div class="row">
+                    <div class="col-lg-6 ml-auto">
+                        <h2 class="footer-heading mb-4">Des liens utiles</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'about' %}">À Propos</a></li>
+                            <li><a href="{% url 'student' %}">Rejoindre le réseau étudiant</a></li>
+                            <li><a href="{% url 'contact' %}">Contact Nous</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="footer-heading mb-4">Newsletter</h2>
+                        {{ formFooter.email.errors }}
+                        <form action="{% url 'home' %}" method="post" class="d-flex" class="subscribe">
+                            {% csrf_token %}
+
+                            {{formFooter.email }}
+                            <input type="submit" value="Envoyer" class="btn btn-outline-white">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5 mt-5 text-center">
+            <div class="col-md-12">
+                <div class="border-top pt-5">
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                        Tous les droits réservés | Made <i class="icon-heart text-danger" aria-hidden="true"></i> by <a
+                            href="www.pacodjo.fr" target="_blank">Paco Djo</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title%} 
+...
+{% endblock%}
+{% block content %}
+
+{% for volunteers in volunteer %}
+1
+{% endfor %}
+
+<div class="container-fluid d-flex  justify-content-center" >
+
+<h4 class="mb40 text-uppercase font500 m-5" style="margin-left: auto; margin-right: auto;" >Gestion des Volontaire</h4>
+
+</div>
+<div class="container">   
+<table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Prénom</th>
+        <th scope="col">Date de naissance</th>
+        <th scope="col">Profession</th>
+        <th scope="col">Émail</th>
+        <th scope="col">Commune</th>
+        <th scope="col">Adresse</th>
+      </tr>
+    </thead>
+    <tbody>
+
+        {% for volunteer in volunteers %}
+        
+          <tr>
+            
+            <th>{{volunteer.id}}</th>
+            <td>{{volunteer.first_name}}</td>
+            <td>{{volunteer.last_name}}</td>
+            <td>{{volunteer.birthday}}</td>
+            <td>{{volunteer.profession}}</td>
+            <td>{{volunteer.email}}</td>
+            <td>{{volunteer.city}}</td>
+            <td>{{volunteer.address}}</td>
+          </tr>
+        {% endfor %}
+      
+      
+    </tbody>
+</table>
+</div>
+  
+  
+{% endblock%}

@@ -1,0 +1,98 @@
+
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title%} 
+Home
+{% endblock%}
+{% block lick %}
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+{% endblock%}
+
+{% block content %}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mb40">
+            <article>
+                <img src="{{detail.image.url}}" alt="" class="img-fluid mb30">
+                <div class="post-content">
+                    <h3>{{detail.name}}</h3>
+                    <ul class="post-meta list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-user-circle-o"></i> <a href="#">la Maison des Jeunes</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-calendar-o"></i> <a href="#">{{detail.date_created}}</a>
+                        </li>
+                        
+                    </ul>
+                    <p>{{detail.description|safe}}</p>
+                    
+
+                    <hr class="mb40">
+                    <h4 class="mb40 text-uppercase font500">Incripetion</h4>
+                    <form action="{% url 'register' detail.pk %}" method="post" form>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="form-group col-md-6 col-lg-6">
+                                <label for="exampleInputNom" class="m-2">Nom</label>
+                              <input type="text" class="form-control" placeholder="Nom" name="nom" id="exampleInputNom" required>
+                            </div>
+                            <div class="form-group col-md-6 col-lg-6">
+                                <label for="exampleInputName" class="m-2">Prenom</label>
+                              <input type="text" class="form-control" placeholder="Prénom" name="prenom" id="exampleInputName" required>
+                            </div>
+
+                            <div class="form-group col-md-6 col-lg-6">
+                                <label class="m-2" for="exampleCheck1">Date</label>
+                                <input type="date" class="form-control" id="exampleCheck1" name="date">
+                                
+                            </div>
+
+                            <div class="form-group col-md-6 col-lg-6">
+                                <label for="exampleInputEmail1" class="m-2">Email</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" name="mail" required aria-describedby="emailHelp" placeholder="Email">
+                               
+                            </div>
+                            
+                            <div class="form-group col-md-6 col-lg-6">
+                                <label for="exampleFormControlSelect1" class="m-2">Commune</label>
+                                <select class="form-control" required id="exampleFormControlSelect1" name="city">
+                                  <option>Select</option>
+                                  {% for city in cities %}
+
+                                  <option>{{city.name}}</option>
+                      
+                                  {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6 col-lg-6">
+                                <label for="exampleFormAdresse" class="m-2">Adresse</label>
+                                <input class="form-control" type="text" required id="exampleFormAdresse" name="address" placeholder="Adresse">
+                                  
+                            </div>
+
+                        </div>
+                        
+                        
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                      </form>
+                </div>
+            </article>
+            <!-- post article-->
+
+        </div>
+        
+    </div>
+</div>
+
+{% endblock%}
