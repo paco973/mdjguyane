@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-import django_heroku
+#import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -200,7 +200,7 @@ EMAIL_USE_TLS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 
 
 # Constante de stripe
