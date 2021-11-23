@@ -90,27 +90,33 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
+
 DATABASES = {
+
+
+
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mdj',
-        'USER': 'djo',
-        'PASSWORD': 'pacopaco',
-        'HOST': 'localhost',
+        'NAME': 'mdjguyane',
+        'USER': 'paco@mdjguyane',
+        'PASSWORD': 'PAPApadeo1',
+        'HOST': 'mdjguyane.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
 
+
 '''
+
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mdj',
-        'USER': 'djo',
-        'PASSWORD': 'pacopaco',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': 'mdjguyane',
+        'USER': 'paco',
+        'PASSWORD': 'PAPApadeo1',
+        'HOST': '/cloudsal/mdjguyane:us-central1:myinstance',
     }
 }
 DATABASES = {
@@ -119,30 +125,22 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 DATABASES = {
+
+
+
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd7elu07jm63i24',
-        'USER': 'suohgfebbphkll',
-        'PASSWORD': '19e57a7ef3b3353626340a5513b98633fe91879530f2ac492c76a822408e7392',
-        'HOST': 'ec2-107-22-245-82.compute-1.amazonaws.com',
+        'NAME': 'mdjguyane',
+        'USER': 'paco',
+        'PASSWORD': 'PAPApadeo1',
+        'HOST': 'mdjguyane.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
-}
 
-DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-            'OPTIONS' : {
-                'read_default_file': '/etc/mysql/my.cnf',
-                }
-            }
-        }
 '''
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -207,3 +205,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STRIPE_PUBLIC_KEY = "pk_test_51JvNteLu7wedQjFifldNigf9VDg6rVAPRFw0ir12Znwq4jT7xa0PKfxZ7Z0TNPwXCayhzLWeQbbpDCsuatn0ssUs00CwUVlagB"
 STRIPE_SECRET_KEY = "sk_test_51JvNteLu7wedQjFimwBxANDjbV0k3mHnP3sUa6kA3uHzn6l3bpngbSdPDrlRCGPej25EVTMFurIo83t332zl00P800gJFqVTly"
 STRIPE_WEBHOOK_SECRET = ""
+
+
+
+

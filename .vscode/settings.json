@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/2925cce5-c026-4bfb-af18-ec89e7042eb7/resourceGroups/mdjguyane/providers/Microsoft.Web/sites/mdjguyane",
+    "appService.deploySubpath": "."
+}
