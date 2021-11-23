@@ -8008,7 +8008,7 @@ a.text-secondary:hover, a.text-secondary:focus {
 a.text-success:hover, a.text-success:focus {
   color: #4f832e !important; }
 
-.text-info {
+.text-white {
   color: #17a2b8 !important; }
 
 a.text-info:hover, a.text-info:focus {
@@ -8020,7 +8020,7 @@ a.text-info:hover, a.text-info:focus {
 a.text-warning:hover, a.text-warning:focus {
   color: #ba8b00 !important; }
 
-.text-info {
+.text-danger {
   color: #dc3545 !important; }
 
 a.text-danger:hover, a.text-danger:focus {

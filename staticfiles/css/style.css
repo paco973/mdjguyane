@@ -234,6 +234,16 @@ h1, h2, h3, h4, h5,
 .border-2 {
   border-width: 2px; }
 
+.bg-bleu{
+  background-color: #01141c !important;
+}
+
+a.bg-bleu:hover, a.bg-bleu:focus,
+button.bg-bleu:hover,
+button.bg-bleu:focus {
+  background-color: #0f6674 !important; }
+
+
 .text-black {
   color: #000 !important; }
 

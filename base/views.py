@@ -220,7 +220,7 @@ def sendmail(request):
 
 
 def project_detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id).filter(published=True)
+    post = get_object_or_404(Post, id=post_id)
     categories = PostCategory.objects.all()
     formFooter = NewsletterForm
 
