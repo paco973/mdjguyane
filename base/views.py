@@ -5,6 +5,7 @@ from .forms.StudentForm import StudentForm
 from .forms.NewsletterForm import NewsletterForm
 from .forms.MemberForm import MemberForm
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Event, City, Student, EventByStudent, Volunteer, Study, Level, MdjMember, Message, Newsletter, \
     ProductCategory, Product
@@ -85,7 +86,14 @@ def member(request):
             _member.save()
 
             # redirect to a new URL:
-            return redirect('api_checkout_session')
+            return render(
+                request,
+                'base/payment.html',
+                context={'prix': request.POST.get('prix'),
+                         'email': form.cleaned_data['email'],
+                         'stripe_publishable_key': settings.STRIPE_PUBLIC_KEY
+                         }
+            )
 
     else:
         form = StudentForm
@@ -260,3 +268,5 @@ def shop(request):
         'categories': categories
     }
     return render(request, 'base/shop.html', context)
+
+

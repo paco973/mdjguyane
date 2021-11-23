@@ -38,7 +38,7 @@ class ProductDetailView(DetailView):
 @csrf_exempt
 def create_checkout_session(request):
     request_data = json.loads(request.body)
-    # product = get_object_or_404(Product, pk=id)
+    product = get_object_or_404(Product, pk=1)
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
     checkout_session = stripe.checkout.Session.create(
@@ -51,9 +51,9 @@ def create_checkout_session(request):
                 'price_data': {
                     'currency': 'inr',
                     'product_data': {
-                        'name': 'member',
+                        'name': product.name,
                     },
-                    'unit_amount': 21000,
+                    'unit_amount': int(product.price * 100),
                 },
                 'quantity': 1,
             }
@@ -70,6 +70,12 @@ def create_checkout_session(request):
     #     product=product, ......
     # )
 
+    order = OrderDetail()
+    order.customer_email = request_data['email']
+    order.product = product
+    order.stripe_payment_intent = checkout_session['payment_intent']
+    order.amount = int(product.price * 100)
+    order.save()
 
     # return JsonResponse({'data': checkout_session})
     return JsonResponse({'sessionId': checkout_session.id})
