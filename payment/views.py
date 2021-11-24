@@ -1,6 +1,8 @@
 from django.http.response import HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
+
+from base.models import MdjMember
 from .models import *
 from django.views.generic import ListView, CreateView, DetailView, TemplateView
 import stripe
@@ -11,34 +13,10 @@ import json
 
 # Create your views here.
 
-class ProductListView(ListView):
-    model = Product
-    template_name = "payments/product_list.html"
-    context_object_name = 'product_list'
-
-
-class ProductCreateView(CreateView):
-    model = Product
-    fields = '__all__'
-    template_name = "payments/product_create.html"
-    success_url = reverse_lazy("home")
-
-
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = "payments/product_detail.html"
-    pk_url_kwarg = 'id'
-
-    def get_context_data(self, **kwargs):
-        context = super(ProductDetailView, self).get_context_data(**kwargs)
-        context['stripe_publishable_key'] = settings.STRIPE_PUBLISHABLE_KEY
-        return context
-
-
 @csrf_exempt
 def create_checkout_session(request):
     request_data = json.loads(request.body)
-    product = get_object_or_404(Product, pk=1)
+    member = MdjMember.objects.get(email=request_data['email'])
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
     checkout_session = stripe.checkout.Session.create(
@@ -49,11 +27,11 @@ def create_checkout_session(request):
         line_items=[
             {
                 'price_data': {
-                    'currency': 'inr',
+                    'currency': 'eur',
                     'product_data': {
-                        'name': product.name,
+                        'name': member.role.name,
                     },
-                    'unit_amount': int(product.price * 100),
+                    'unit_amount': int(member.role.nombre * 100),
                 },
                 'quantity': 1,
             }
@@ -72,9 +50,8 @@ def create_checkout_session(request):
 
     order = OrderDetail()
     order.customer_email = request_data['email']
-    order.product = product
     order.stripe_payment_intent = checkout_session['payment_intent']
-    order.amount = int(product.price * 100)
+    order.amount = int(member.role.nombre * 1667)
     order.save()
 
     # return JsonResponse({'data': checkout_session})

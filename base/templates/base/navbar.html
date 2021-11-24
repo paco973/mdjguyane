@@ -1,3 +1,4 @@
+
 <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
         <div class="site-mobile-menu-close mt-3">
@@ -25,14 +26,14 @@
                                                           class="text-white site-menu-toggle js-menu-toggle py-5 text-white"><span
                         class="icon-menu h3 text-white"></span></a></span>
                 <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
-                    <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                    <ul class="site-menu main-menu js-clone-nav ml-auto">
                         {% if request.path == '/' %}
-                        <li class="active"><a href="{% url 'home' %}" class="nav-link text-info">Accueil</a></li>
+                            <li class="active"><a href="{% url 'home' %}" class="nav-link text-info">Accueil</a></li>
                         {% else %}
-                        <li><a href="{% url 'home' %}" class="nav-link">Accueil</a></li>
+                            <li><a href="{% url 'home' %}" class="nav-link">Accueil</a></li>
                         {% endif %}
 
-<!--
+                        <!--
                         {% if request.path == '/member/' %}
                         <li class="active"><a href="{% url 'member' %}" class="nav-link">Aides</a></li>
                         {% else %}
@@ -49,45 +50,49 @@
 
 
                         {% if request.path == '/about/' %}
-                        <li class="active"><a href="{% url 'about' %}" class="nav-link">À propos</a></li>
+                            <li class="active"><a href="{% url 'about' %}" class="nav-link">À propos</a></li>
                         {% else %}
-                        <li><a href="{% url 'about' %}" class="nav-link">À propos</a></li>
+                            <li><a href="{% url 'about' %}" class="nav-link">À propos</a></li>
                         {% endif %}
 
-                        {% if request.path == '/student/'%}
+                        {% if request.path == '/student/' or request.path == '/member/' %}
                             <li>
                                 <div class="dropdown">
-                                    <a style="color: black" class="nav-link dropdown-toggle" href="#" role="button" id="deroulanta"
+                                    <a style="color: red" class="nav-link dropdown-toggle" href="#" role="button"
+                                       id="deroulanta"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rejoindre</a>
                                     <div class="dropdown-menu" aria-labelledby="deroulanta">
                                         <a class="dropdown-item" href="{% url 'member' %}">Nous rejoindre</a>
-                                        <a class="dropdown-item text-black" href="{% url 'student' %}">Rejoindre le réseau étudiant</a>
+                                        <a class="dropdown-item text-black" href="{% url 'student' %}">Rejoindre le
+                                            réseau étudiant</a>
                                     </div>
                                 </div>
                             </li>
                         {% else %}
                             <li>
                                 <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" style="color: black"  href="#"  role="button" id="deroulanta1"
+                                    <a class="nav-link dropdown-toggle"  style="color: black; " href="#" role="button"
+                                       id="deroulanta1"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rejoindre</a>
                                     <div class="dropdown-menu" aria-labelledby="deroulanta1">
                                         <a class="dropdown-item" href="{% url 'member' %}">Nous rejoindre</a>
-                                        <a class="dropdown-item" href="{% url 'student' %}">Rejoindre le réseau étudiant</a>
+                                        <a class="dropdown-item" href="{% url 'student' %}">Rejoindre le réseau
+                                            étudiant</a>
                                     </div>
                                 </div>
                             </li>
                         {% endif %}
 
                         {% if request.path == '/project/' %}
-                        <li class="active"><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
+                            <li class="active"><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
                         {% else %}
-                        <li><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
+                            <li><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
                         {% endif %}
 
                         {% if request.path == '/contact/' %}
-                        <li class="active"><a href="{% url 'contact' %}" class="nav-link">Contacte</a></li>
+                            <li class="active"><a href="{% url 'contact' %}" class="nav-link">Contacte</a></li>
                         {% else %}
-                        <li><a href="{% url 'contact' %}" class="nav-link">Contacte</a></li>
+                            <li><a href="{% url 'contact' %}" class="nav-link">Contacte</a></li>
                         {% endif %}
                     </ul>
                 </nav>
@@ -96,3 +101,4 @@
     </div>
 
 </header>
+

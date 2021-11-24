@@ -8,7 +8,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Event, City, Student, EventByStudent, Volunteer, Study, Level, MdjMember, Message, Newsletter, \
-    ProductCategory, Product
+    ProductCategory, Product, Role
 from blog.models import Post, PostCategory
 
 
@@ -76,24 +76,27 @@ def member(request):
             # process the data in form.cleaned_data as required
             # ...
             city = City.objects.get(name=form.cleaned_data['city'])
+            role = Role.objects.get(name=request.POST['prix'])
 
             _member = MdjMember.objects.create(first_name=form.cleaned_data['first_name'],
                                                last_name=form.cleaned_data['last_name'],
                                                email=form.cleaned_data['email'], address=form.cleaned_data['address'],
                                                birthday=form.cleaned_data['birthday'],
-                                               phone_number=form.cleaned_data['phone_number'], city=city
+                                               phone_number=form.cleaned_data['phone_number'], city=city, role=role
                                                )
             _member.save()
 
-            # redirect to a new URL:
-            return render(
-                request,
-                'base/payment.html',
-                context={'prix': request.POST.get('prix'),
-                         'email': form.cleaned_data['email'],
-                         'stripe_publishable_key': settings.STRIPE_PUBLIC_KEY
-                         }
+            send_mail(
+                'Adhesion MDJ',
+                "Bienvenu(e) dans l’association \n\nla MDJ Guyane Merci pour votre confiance et votre engagement au sein de la Maison Des Jeunes de Guyane.\nVous êtes désarmais Membre pour une durée de 364 jours.\n Par votre adhésion participez, au rayonnement des Jeunes de Guyane.",
+                settings.DEFAULT_FROM_EMAIL,
+                [form.cleaned_data['email']],
+
             )
+
+            # redirect to a new URL:
+            return render(request, "payments/product_detail.html", context={'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY, 'member': _member})
+
 
     else:
         form = StudentForm
@@ -136,6 +139,15 @@ def student(request):
                                               phone_number=form.cleaned_data['phone_number'],
                                               school=form.cleaned_data['school'], study=study, level=level, city=city)
             _student.save()
+
+            send_mail(
+                'Réseau Étudiant MDJ',
+                "Bienvenu(e) au Réseau Etudiant de Guyane \n\nCe réseau est outil pour les étudiants de Guyane hors du territoire.\nMerci pour la confiance accordée à ce réseau étudiant, nous vous souhaitons dores et déjà nos voeux de réussite pour votre formation d’enseignement supérieur.\n\nVotre Section locale de l’association vous sera communiqué dans un prochain mail.",
+                settings.DEFAULT_FROM_EMAIL,
+                [form.cleaned_data['email']],
+
+            )
+
             return redirect('home')
 
     else:
@@ -171,7 +183,7 @@ def contact(request):
 
 
 def about(request):
-    mdj_members = MdjMember.objects.all().exclude(role=None).order_by('ordre')
+    mdj_members = MdjMember.objects.all().exclude(role=1).order_by('ordre')
 
     formFooter = NewsletterForm
     context = {
@@ -206,10 +218,11 @@ def project(request):
 def sendmail(request):
     if request.method == 'POST':
         send_mail(
-            request.POST['name'] + ' ' + request.POST['nom'],
-            request.POST['message'],
+            'Accusé de réception MDJ Guyane',
+            'Merci pour votre message, celui-ci sera traité dans les meilleurs délais.',
             settings.DEFAULT_FROM_EMAIL,
-            ['padeodjo973@icloud.com'],
+            [request.POST['mail']],
+
         )
 
         message = Message.objects.create(first_name=request.POST['name'], last_name=request.POST['nom'],
@@ -268,5 +281,3 @@ def shop(request):
         'categories': categories
     }
     return render(request, 'base/shop.html', context)
-
-

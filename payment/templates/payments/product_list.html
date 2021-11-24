@@ -1,32 +1,38 @@
-{% extends 'payments/base.html' %}
+{% extends 'base/base.html' %}
 
 {% block content %}
 <h1 class="text-center">Product List</h1>
 <div class="container">
-    {% if product_list %}
+
+<body>
+
+
+<br><br><br><br><br><br><br><br><br><br><br>
+<div class="container d-flex`justify-content-center">
+    <h1>Navigation</h1>
     <div class="row">
-
-
-        {% for p in product_list %}
-        <div class="col-sm-4">
-            <div class="card">
-                <img class="card-img-top" src="https://dummyimage.com/200x150.jpg?text={{ p.name }}" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">{{ p.name }}</h4>
-                    <p class="card-text">{{ p.description }}</p>
-                </div>
-                <div class="card-footer d-flex">
-                    <a href="{% url 'detail' id=p.id %}" class="btn btn-success ml-auto">Buy Now</a>
-                </div>
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="deroulanta" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">Lien</a>
+            <div class="dropdown-menu" aria-labelledby="deroulanta">
+                <a class="dropdown-item" href="#">Lien</a>
+                <button class="dropdown-item" type="button">Bouton</button>
+                <span class="dropdown-item-text">Texte</span>
             </div>
         </div>
-        {% endfor %}
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="deroulantb" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Bouton
+            </button>
+            <div class="dropdown-menu" aria-labelledby="deroulantb">
+                <a class="dropdown-item" href="#">Lien</a>
+                <button class="dropdown-item" type="button">Bouton</button>
+                <span class="dropdown-item-text">Texte</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 
-    </div>
-    {% else %}
-    <div class="alert alert-info text-center mt-5">
-        The product list is empty. Please add some products first.
-    </div>
-    {% endif %}
 </div>
 {% endblock content %}

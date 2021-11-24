@@ -128,6 +128,7 @@ class EventByStudent(models.Model):
 
 class Role(models.Model):
     name = models.CharField(max_length=50, blank=False, null=False, unique=True)
+    nombre = models.IntegerField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now=True)
     date_modified = models.DateTimeField(auto_now=True)
 

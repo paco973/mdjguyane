@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-#import django_heroku
+# import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mz$@-2e25eb$ts#pwz2xpfaz2daq%qx4baoodo_zjku1c1r$(='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'base',
     'blog',
     'don',
-    'payment'
+    'payment',
+    'bootstrap5',
 
 ]
 
@@ -90,6 +91,8 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
+
+'''
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -100,10 +103,6 @@ DATABASES = {
             'PORT': '5432',
         }
     }
-
-
-'''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -161,11 +160,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-
-
-
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -183,17 +178,29 @@ EMAIL_USE_TLS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 
 # Constante de stripe
 if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
     STRIPE_PUBLISHABLE_KEY = 'pk_test_51JvNteLu7wedQjFifldNigf9VDg6rVAPRFw0ir12Znwq4jT7xa0PKfxZ7Z0TNPwXCayhzLWeQbbpDCsuatn0ssUs00CwUVlagB'
     STRIPE_SECRET_KEY = 'sk_test_51JvNteLu7wedQjFimwBxANDjbV0k3mHnP3sUa6kA3uHzn6l3bpngbSdPDrlRCGPej25EVTMFurIo83t332zl00P800gJFqVTly'
-# else:
-#     STRIPE_PUBLISHABLE_KEY = 'production_publishable_key'
-#     STRIPE_SECRET_KEY = 'production_secret_key'
-
-
-
-
+else:
+    STRIPE_PUBLISHABLE_KEY = 'pk_test_51JvNteLu7wedQjFifldNigf9VDg6rVAPRFw0ir12Znwq4jT7xa0PKfxZ7Z0TNPwXCayhzLWeQbbpDCsuatn0ssUs00CwUVlagB'
+    STRIPE_SECRET_KEY = 'sk_test_51JvNteLu7wedQjFimwBxANDjbV0k3mHnP3sUa6kA3uHzn6l3bpngbSdPDrlRCGPej25EVTMFurIo83t332zl00P800gJFqVTly'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'mdjguyane',
+            'USER': 'paco@mdjguyane',
+            'PASSWORD': 'PAPApadeo1',
+            'HOST': 'mdjguyane.postgres.database.azure.com',
+            'PORT': '5432',
+        }
+    }

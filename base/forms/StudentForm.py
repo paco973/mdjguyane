@@ -44,7 +44,7 @@ class StudentForm(ModelForm):
             'school': TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'École',
+                    'placeholder': 'Établissement',
                 }),
 
             'study': TextInput(
