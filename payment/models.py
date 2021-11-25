@@ -2,7 +2,6 @@ from django.db import models
 from django.core import validators
 
 
-
 class OrderDetail(models.Model):
     id = models.BigAutoField(
         primary_key=True
