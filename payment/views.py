@@ -1,10 +1,10 @@
 from django.http.response import HttpResponseNotFound, JsonResponse
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse, reverse_lazy
+from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
 
-from base.models import MdjMember
+from base.models import MdjMember, City
 from .models import *
-from django.views.generic import ListView, CreateView, DetailView, TemplateView
+from django.views.generic import ListView, TemplateView
 import stripe
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -51,7 +51,7 @@ def create_checkout_session(request):
     order = OrderDetail()
     order.customer_email = request_data['email']
     order.stripe_payment_intent = checkout_session['payment_intent']
-    order.amount = int(member.role.nombre * 1667)
+    order.amount = int(member.role.nombre * 100)
     order.save()
 
     # return JsonResponse({'data': checkout_session})
@@ -82,3 +82,16 @@ class PaymentFailedView(TemplateView):
 class OrderHistoryListView(ListView):
     model = OrderDetail
     template_name = "payments/order_history.html"
+
+
+def importVille(request):
+    with open('./correspondance-code-insee-code-postal.json') as json_data:
+        datas = json.load(json_data)
+    json_data.close()
+
+    for data in datas:
+        ville = City.objects.create(name=data["fields"]["nom_comm"],
+                                    description=data["fields"]["statut"] + " " + data["fields"]["nom_region"])
+        ville.save()
+
+    return redirect('home')

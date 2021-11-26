@@ -25,9 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mz$@-2e25eb$ts#pwz2xpfaz2daq%qx4baoodo_zjku1c1r$(='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['*']
+DEBUG = True
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -59,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'mdj.urls'
@@ -84,7 +86,7 @@ WSGI_APPLICATION = 'mdj.wsgi.application'
 
 INTERNAL_IPS = [
 
-    '127.0.0.1',
+    '127.0.0.2',
 
 ]
 
@@ -162,7 +164,7 @@ STATIC_URL = '/static/'
 STATICFILES = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -187,10 +189,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if DEBUG:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'mdjguyane',
+            'USER': 'paco@mdjguyane',
+            'PASSWORD': 'PAPApadeo1',
+            'HOST': 'mdjguyane.postgres.database.azure.com',
+            'PORT': '5432',
         }
     }
+
     STRIPE_PUBLISHABLE_KEY = 'pk_test_51JvNteLu7wedQjFifldNigf9VDg6rVAPRFw0ir12Znwq4jT7xa0PKfxZ7Z0TNPwXCayhzLWeQbbpDCsuatn0ssUs00CwUVlagB'
     STRIPE_SECRET_KEY = 'sk_test_51JvNteLu7wedQjFimwBxANDjbV0k3mHnP3sUa6kA3uHzn6l3bpngbSdPDrlRCGPej25EVTMFurIo83t332zl00P800gJFqVTly'
 else:
