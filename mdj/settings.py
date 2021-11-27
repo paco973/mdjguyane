@@ -158,8 +158,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES = os.path.join(BASE_DIR, 'static')
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_FILE_STORAGE = 'mdj.backend.custom_azure.AzureMediaStorage'
+#  STATIC_ROOT = 'mdj.backend.custom_azure.AzureStaticfilesStorage'
+MEDIA_LOCATION = "media"
+AZURE_ACCOUNT_NAME = "mdjguyane"
+#  STATIC_LOCATION = "static"
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+# STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
+
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -177,9 +190,6 @@ EMAIL_USE_TLS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# django_heroku.settings(locals())
-
-
 # Constante de stripe
 if DEBUG:
     DATABASES = {
@@ -193,17 +203,11 @@ if DEBUG:
         }
     }
 
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATIC_URL = '/static/'
-    STATICFILES = os.path.join(BASE_DIR, 'static')
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-    STRIPE_PUBLISHABLE_KEY = 'pk_test_51JvNteLu7wedQjFifldNigf9VDg6rVAPRFw0ir12Znwq4jT7xa0PKfxZ7Z0TNPwXCayhzLWeQbbpDCsuatn0ssUs00CwUVlagB'
-    STRIPE_SECRET_KEY = 'sk_test_51JvNteLu7wedQjFimwBxANDjbV0k3mHnP3sUa6kA3uHzn6l3bpngbSdPDrlRCGPej25EVTMFurIo83t332zl00P800gJFqVTly'
+    STRIPE_PUBLISHABLE_KEY = 'pk_live_51JvNteLu7wedQjFiLBm2ERZBoqSjQ5RmRHipt2nIbWUosVodj5usNjhKpp6n1FwLVlJev7aeb80PW85kcZMLp4CT00v61GBsrA'
+    STRIPE_SECRET_KEY = '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'
 else:
-    STRIPE_PUBLISHABLE_KEY = 'pk_test_51JvNteLu7wedQjFifldNigf9VDg6rVAPRFw0ir12Znwq4jT7xa0PKfxZ7Z0TNPwXCayhzLWeQbbpDCsuatn0ssUs00CwUVlagB'
-    STRIPE_SECRET_KEY = 'sk_test_51JvNteLu7wedQjFimwBxANDjbV0k3mHnP3sUa6kA3uHzn6l3bpngbSdPDrlRCGPej25EVTMFurIo83t332zl00P800gJFqVTly'
+    STRIPE_PUBLISHABLE_KEY = 'pk_live_51JvNteLu7wedQjFiLBm2ERZBoqSjQ5RmRHipt2nIbWUosVodj5usNjhKpp6n1FwLVlJev7aeb80PW85kcZMLp4CT00v61GBsrA'
+    STRIPE_SECRET_KEY = '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'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -215,10 +219,4 @@ else:
         }
     }
 
-    DEFAULT_FILE_STORAGE = 'backend.custom_azure.AzureMediaStorage'
-    MEDIA_LOCATION = "media"
-    AZURE_ACCOUNT_NAME = "mdjguyane"
-    STATIC_LOCATION = "static"
-    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
