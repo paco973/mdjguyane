@@ -183,7 +183,8 @@ def contact(request):
 
 
 def about(request):
-    mdj_members = MdjMember.objects.all().exclude(role=1).order_by('ordre')
+    role = [2, 3, 4, 5, 6, 7]
+    mdj_members = MdjMember.objects.filter(role__in=role).order_by('ordre')
 
     formFooter = NewsletterForm
     context = {
