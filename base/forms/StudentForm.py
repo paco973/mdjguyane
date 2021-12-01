@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput, EmailInput, Select, DateInput
-from base.models import Student
+from base.models import Student, City
 
 
 class StudentForm(ModelForm):
@@ -21,7 +21,7 @@ class StudentForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Prénom'
             }),
-            'city': TextInput(attrs={
+            'city': Select(attrs={
                 'class': 'form-control',
                 'list': 'ville_list',
                 'placeholder': 'ville',
@@ -59,6 +59,10 @@ class StudentForm(ModelForm):
             })
         }
 
+    def __init__(self, *args, **kwargs):
+        super(StudentForm, self).__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.all().order_by('name')
+
     def clean(self):
 
         # data from the form is fetched using super function
@@ -74,7 +78,7 @@ class StudentForm(ModelForm):
                 'Minimum 3 characters required'])
         if len(last_name) < 2:
             self._errors['last_name'] = self.error_class([
-                'Post Should Contain a minimum of 10 characters'])
+                'Minimum 3 characters required'])
 
         # return any errors if found
         return self.cleaned_data
