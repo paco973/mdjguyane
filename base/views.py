@@ -1,11 +1,11 @@
-import stripe
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from .forms.StudentForm import StudentForm
 from .forms.NewsletterForm import NewsletterForm
 from .forms.MemberForm import MemberForm
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
+
 
 from .models import Event, City, Student, EventByStudent, Volunteer, Study, Level, MdjMember, Message, Newsletter, \
     ProductCategory, Product, Role
@@ -66,7 +66,7 @@ def register(request, event_id=None):
 
 
 def member(request):
-    cities = City.objects.all()
+    cities = City.objects.all().order_by('name')
     formFooter = NewsletterForm
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -95,7 +95,8 @@ def member(request):
             )
 
             # redirect to a new URL:
-            return render(request, "payments/product_detail.html", context={'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY, 'member': _member})
+            return render(request, "payments/product_detail.html",
+                          context={'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY, 'member': _member})
 
 
     else:
@@ -111,7 +112,7 @@ def member(request):
 
 
 def student(request):
-    cities = City.objects.all()
+    cities = City.objects.all().order_by('name')
     studies = Study.objects.all()
     levels = Level.objects.all()
     formFooter = NewsletterForm
@@ -183,14 +184,24 @@ def contact(request):
 
 
 def about(request):
-    role = [2, 3, 4, 5, 6, 7]
+    role = [3, 4, 5, 6, 7, 8]
+
+    # Membre du bureau
     mdj_members = MdjMember.objects.filter(role__in=role).order_by('ordre')
 
+    # Chef de section
+    section = MdjMember.objects.filter(role=9).order_by('ordre')
+
+    # formulaire News letters
     formFooter = NewsletterForm
+
+    # paramètres
     context = {
         'formFooter': formFooter,
         'mdj_members': mdj_members,
+        'section': section
     }
+
     return render(request, 'base/about.html', context)
 
 
@@ -200,6 +211,7 @@ def service(request):
     context = {
         'formFooter': formFooter,
     }
+
     return render(request, 'base/service.html', context)
 
 
@@ -217,13 +229,13 @@ def project(request):
 
 
 def sendmail(request):
+
     if request.method == 'POST':
         send_mail(
             'Accusé de réception MDJ Guyane',
             'Merci pour votre message, celui-ci sera traité dans les meilleurs délais.',
             settings.DEFAULT_FROM_EMAIL,
             [request.POST['mail']],
-
         )
 
         message = Message.objects.create(first_name=request.POST['name'], last_name=request.POST['nom'],

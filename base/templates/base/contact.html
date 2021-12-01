@@ -1,82 +1,86 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block title%}
-Home
-{% endblock%}
+{% block title %}
+    Home
+{% endblock %}
 
 
 {% block content %}
 
-<div class="ftco-blocks-cover-1">
-    <div class="site-section-cover overlay" data-stellar-background-ratio="0.5"
-         style="background-image: url('../../static/img/img_5.png')">
+    <div class="ftco-blocks-cover-1">
+        <div class="site-section-cover overlay" data-stellar-background-ratio="0.5"
+             style="background-image: url('../../static/img/img_5.png')">
+            <div class="container">
+                <div class="row align-items-center justify-content-center text-center">
+                    <div class="col-md-7">
+                        <h1 class="mb-3">Contactez Nous</h1>
+                        <p><a href="{% url 'about' %}" class="btn btn-outline-white">En Savoir Plus</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-section bg-light" id="contact-section">
         <div class="container">
-            <div class="row align-items-center justify-content-center text-center">
-                <div class="col-md-7">
-                    <h1 class="mb-3">Contactez Nous</h1>
-                    <p><a href="{% url 'about' %}" class="btn btn-outline-white">En Savoir Plus</a></p>
+            <div class="row mb-2">
+                <div class="col-8  mb-6">
+                    <strong><h3 class="text-info">Contacter La Maison Des jeunes De Guyane</h3></strong>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="site-section bg-light" id="contact-section">
-    <div class="container">
-        <div class="row mb-2">
-            <div class="col-8  mb-6">
-               <strong> <h3 class="text-info">Contacter La Maison Des jeunes De Guyane</h3></strong>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 mb-5">
-                <form action="{% url 'sendmail' %}" method="post">
-                      {% csrf_token %}
-                    <div class="form-group row">
-                        <div class="col-md-6 mb-4 mb-lg-0">
-                            <input type="text" class="form-control" placeholder="Prénom" name="name">
+            <div class="row">
+                <div class="col-lg-8 mb-5">
+                    <form action="{% url 'sendmail' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-md-6 mb-4 mb-lg-0">
+                                <input type="text" class="form-control" placeholder="Prénom" name="name">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Nom" name="nom">
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Nom" name="nom">
-                        </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="Émail" name="mail">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" placeholder="Émail" name="mail">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <textarea name="message" id="" class="form-control" placeholder="Écrit ton message"  cols="30"
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                            <textarea name="message" id="" class="form-control" placeholder="Écrit ton message"
+                                      cols="30"
                                       rows="10"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-6 mr-auto">
-                            <input type="submit" class="btn btn-block btn-outline-info text-black py-3 px-5"
-                                   value="Envoyer">
+                        <div class="form-group row">
+                            <div class="col-md-6 mr-auto">
+                                <input type="submit" class="btn btn-block btn-outline-info text-black py-3 px-5"
+                                       value="Envoyer">
+                            </div>
                         </div>
+                    </form>
+                </div>
+                <div class="col-lg-4 ml-auto">
+                    <div class="bg-white p-3 p-md-5">
+                        <h3 class="text-black mb-4">Nos Infos</h3>
+                        <ul class="list-unstyled footer-link">
+                            <li class="d-block mb-3">
+                                <span class="d-block text-black">Adresse:</span>
+                                <span>Campus de Troubiran BP 792, 97300 Cayenne Cedex</span></li>
+                            <li class="d-block mb-3"><span
+                                    class="d-block text-black">N° Téléphone:</span><span><a
+                                    style="text-decoration:none;color:black;"
+                                    href="tel:+33630543498">+33 6 30 54 34 98</a></span></li>
+                            <li class="d-block mb-3"><span
+                                    class="d-block text-black">Émail:</span><span><a class="text-black" href="mailto:mdjg.973@gmail.com">mdjg.973@gmail.com</a></span>
+                            </li>
+                        </ul>
                     </div>
-                </form>
-            </div>
-            <div class="col-lg-4 ml-auto">
-                <div class="bg-white p-3 p-md-5">
-                    <h3 class="text-black mb-4">Nos Infos</h3>
-                    <ul class="list-unstyled footer-link">
-                        <li class="d-block mb-3">
-                            <span class="d-block text-black">Adresse:</span>
-                            <span>Campus de Troubiran BP 792, 97300 Cayenne Cedex</span></li>
-                        <li class="d-block mb-3"><span
-                                class="d-block text-black">N° Téléphone:</span><span>+33 6 30 54 34 98 </span></li>
-                        <li class="d-block mb-3"><span
-                                class="d-block text-black">Émail:</span><span>mdjg.973@gmail.com</span></li>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}

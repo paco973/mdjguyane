@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <img src="../../static/img/img_2.png" alt="Image" class="img-fluid mb-5">
-                <h2 class="footer-heading mb-3 text-white">À Propos</h2>
+               <!-- <h2 class="footer-heading mb-3 text-white">À Propos</h2>-->
                 <p style="color: white">Association destinée à venir en aide, accompagner et rassembler les jeunes de Guyane ! </p>
             </div>
             <div class="col-lg-8 ml-auto">
@@ -11,9 +11,13 @@
                     <div class="col-lg-6 ml-auto">
                         <h2 class="footer-heading mb-4">Des liens utiles</h2>
                         <ul class="list-unstyled">
+                            <li><a href="{% url 'home' %}">Accueil</a></li>
                             <li><a href="{% url 'about' %}">À Propos</a></li>
                             <li><a href="{% url 'student' %}">Rejoindre le réseau étudiant</a></li>
+                            <li> <a href="{% url 'member' %}">Nous rejoindre</a></li>
+                            <li><a href="{% url 'project' %}" >Actualité</a></li>
                             <li><a href="{% url 'contact' %}">Contact Nous</a></li>
+
 
                         </ul>
                     </div>
@@ -36,8 +40,8 @@
                     <p>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                        Tous les droits réservés | Made <i class="icon-heart text-danger" aria-hidden="true"></i> by <a
-                            href="www.pacodjo.fr" target="_blank">Paco Djo</a>
+                        Tous les droits réservés | Made  by <a
+                            href="https://www.malt.fr/profile/pacodjo?q=developpeur+python&location=Lyon%2C+France&lon=4.84699&lat=45.7539&countryCode=FR&country=France&administrativeAreaLevel1=Auvergne-Rhône-Alpes&administrativeAreaLevel1Code=Auvergne-Rhône-Alpes&administrativeAreaLevel2=Rhône&administrativeAreaLevel2Code=69000&city=Lyon&as=t&searchid=61a64ff6803ab13f785b44aa" target="_blank">Paco Djo</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
