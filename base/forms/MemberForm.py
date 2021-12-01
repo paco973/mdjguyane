@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput, EmailInput, Select, DateInput
-from base.models import MdjMember
+from base.models import MdjMember, City
 
 
 class MemberForm(ModelForm):
@@ -21,7 +21,7 @@ class MemberForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Prénom'
             }),
-            'city': TextInput(attrs={
+            'city': Select(attrs={
                 'class': 'form-control',
                 'list': 'ville_list',
                 'placeholder': 'ville',
@@ -43,6 +43,9 @@ class MemberForm(ModelForm):
             }),
 
         }
+    def __init__(self, *args, **kwargs):
+        super(MemberForm, self).__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.all().order_by('name')
 
     def clean(self):
 

@@ -32,7 +32,7 @@ class City(models.Model):
 
 
 class Study(models.Model):
-    name = models.CharField(max_length=50, blank=False)
+    name = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True, null=True, max_length=1250)
     date_created = models.DateTimeField(auto_now=True)
     date_modified = models.DateTimeField(auto_now_add=True)

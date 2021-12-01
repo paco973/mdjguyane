@@ -13,7 +13,8 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('blog/', include('blog.urls')),
     path('donation/', include('don.urls')),
-    path('payment/', include('payment.urls'))
+    path('payment/', include('payment.urls')),
+    path('services/', include('service.urls')),
 
 ]
 

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'payment',
     'bootstrap5',
     'storages',
+    'service',
 
 ]
 
