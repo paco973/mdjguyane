@@ -86,13 +86,13 @@ def member(request):
                                                )
             _member.save()
 
-            send_mail(
+            '''send_mail(
                 'Adhesion MDJ',
                 "Bienvenu(e) dans l’association \n\nla MDJ Guyane Merci pour votre confiance et votre engagement au sein de la Maison Des Jeunes de Guyane.\nVous êtes désarmais Membre pour une durée de 364 jours.\n Par votre adhésion participez, au rayonnement des Jeunes de Guyane.",
                 settings.DEFAULT_FROM_EMAIL,
                 [form.cleaned_data['email']],
 
-            )
+            )'''
 
             # redirect to a new URL:
             return render(request, "payments/product_detail.html",
@@ -141,13 +141,13 @@ def student(request):
                                               school=form.cleaned_data['school'], study=study, level=level, city=city)
             _student.save()
 
-            send_mail(
+            '''send_mail(
                 'Réseau Étudiant MDJ',
                 "Bienvenu(e) au Réseau Etudiant de Guyane \n\nCe réseau est outil pour les étudiants de Guyane hors du territoire.\nMerci pour la confiance accordée à ce réseau étudiant, nous vous souhaitons dores et déjà nos voeux de réussite pour votre formation d’enseignement supérieur.\n\nVotre Section locale de l’association vous sera communiqué dans un prochain mail.",
                 settings.DEFAULT_FROM_EMAIL,
                 [form.cleaned_data['email']],
 
-            )
+            )'''
 
             return redirect('home')
 

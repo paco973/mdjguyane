@@ -19,7 +19,7 @@ class MemberForm(ModelForm):
             }),
             'last_name': TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Prénom'
+                'placeholder': 'Nom'
             }),
             'city': Select(attrs={
                 'class': 'form-control',

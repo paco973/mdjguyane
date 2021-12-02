@@ -37,6 +37,7 @@ def create_checkout_session(request):
             }
         ],
         mode='payment',
+
         success_url=request.build_absolute_uri(
             reverse('success')
         ) + "?session_id={CHECKOUT_SESSION_ID}",
@@ -70,6 +71,9 @@ class PaymentSuccessView(TemplateView):
         session = stripe.checkout.Session.retrieve(session_id)
 
         order = get_object_or_404(OrderDetail, stripe_payment_intent=session.payment_intent)
+        member = MdjMember.objects.get(email=order.customer_email)
+        member.active = True
+        member.save()
         order.has_paid = True
         order.save()
         return render(request, self.template_name)

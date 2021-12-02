@@ -57,6 +57,7 @@ class Student(models.Model):
     school = models.CharField(max_length=50, blank=False, null=True)
     study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name='studies', null=False)
     level = models.ForeignKey(Level, on_delete=models.CASCADE, default=None)
+
     date_created = models.DateTimeField(auto_now=True)
     date_modified = models.DateTimeField(auto_now=True)
 
@@ -70,6 +71,7 @@ class Student(models.Model):
 
 
 class Volunteer(models.Model):
+
     last_name = models.CharField(max_length=50, blank=False, null=False)
     first_name = models.CharField(max_length=50, blank=False, null=False)
     birthday = models.DateField(blank=False, null=False)
@@ -153,6 +155,7 @@ class MdjMember(models.Model):
     address = models.CharField(max_length=255, blank=False, null=False, verbose_name='Adresse')
     photo = models.ImageField(blank=True, null=True, upload_to='media/base/member', verbose_name='Photo')
     ordre = models.IntegerField(auto_created=True, verbose_name='Ordre', default=0)
+    active = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now=True)
     date_modified = models.DateTimeField(auto_now=True)
 
