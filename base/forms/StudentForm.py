@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput, EmailInput, Select, DateInput
-from base.models import Student, City
+from base.models import Student, City, Study
 
 
 class StudentForm(ModelForm):
@@ -19,7 +19,7 @@ class StudentForm(ModelForm):
             }),
             'last_name': TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Prénom'
+                'placeholder': 'Nom'
             }),
             'city': Select(attrs={
                 'class': 'form-control',
@@ -47,7 +47,7 @@ class StudentForm(ModelForm):
                     'placeholder': 'Établissement',
                 }),
 
-            'study': TextInput(
+            'study': Select(
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'Étude',
@@ -62,6 +62,7 @@ class StudentForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(StudentForm, self).__init__(*args, **kwargs)
         self.fields['city'].queryset = City.objects.all().order_by('name')
+        self.fields['study'].queryset = Study.objects.all().order_by('name')
 
     def clean(self):
 

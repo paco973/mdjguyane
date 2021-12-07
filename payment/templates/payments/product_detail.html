@@ -1,12 +1,13 @@
-{% extends 'payments/base.html' %}
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 {% block content %}
-<h1 class="text-center">Product Detail</h1>
+
 <div class="container">
 
-    <div class="card">
+    <div class="card mt-5">
         <div class="card-header">
-            <h2>Product Detail</h2>
+            <h2>Produit</h2>
         </div>
         <div class="card-body">
             <div class="container row">
@@ -14,20 +15,20 @@
                     <img src="https://dummyimage.com/150x150.gif?text={{ member.role.name }}" alt="">
                 </div>
                 <div class="col-md-10">
-                    <h1>Name: {{ member.role.name }}</h1>
+                    <h1> {{ member.role.name }}</h1>
 
-                    <p>Price: {{ member.role.nombre }}</p>
+                    <p>Prix: {{ member.role.nombre }}</p>
 
                     <div class="form-group">
                         <label for="email">Email: </label>
                         <input type="email" name="email" value="{{ member.email }}" id="email" class="form-control" placeholder="Email">
-                        <small>Please enter your email address</small>
+                        <small>Entrez votre adresse email</small>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer d-flex">
-            <button class="btn btn-success ml-auto" id="checkout-button">Checkout</button>
+            <button class="btn btn-success ml-auto" id="checkout-button">Passer la commande</button>
         </div>
     </div>
 </div>
