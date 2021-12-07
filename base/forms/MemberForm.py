@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput, EmailInput, Select, DateInput
-from base.models import MdjMember
+from base.models import MdjMember, City
 
 
 class MemberForm(ModelForm):
@@ -11,6 +11,7 @@ class MemberForm(ModelForm):
             'first_name': TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Prénom'
+
             }),
 
             'email': EmailInput(attrs={
@@ -19,9 +20,9 @@ class MemberForm(ModelForm):
             }),
             'last_name': TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Prénom'
+                'placeholder': 'Nom',
             }),
-            'city': TextInput(attrs={
+            'city': Select(attrs={
                 'class': 'form-control',
                 'list': 'ville_list',
                 'placeholder': 'ville',
@@ -44,6 +45,10 @@ class MemberForm(ModelForm):
 
         }
 
+    def __init__(self, *args, **kwargs):
+        super(MemberForm, self).__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.all().order_by('name')
+
     def clean(self):
 
         # data from the form is fetched using super function
@@ -59,7 +64,7 @@ class MemberForm(ModelForm):
                 'Minimum 2 characters required'])
         if len(last_name) < 2:
             self._errors['last_name'] = self.error_class([
-                 'Minimum 2 characters required'])
+                'Minimum 2 characters required'])
 
         # return any errors if found
         return self.cleaned_data

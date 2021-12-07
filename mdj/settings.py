@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mz$@-2e25eb$ts#pwz2xpfaz2daq%qx4baoodo_zjku1c1r$(='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'payment',
     'bootstrap5',
     'storages',
-
+    'service',
+    'store'
 ]
 
 MIDDLEWARE = [
@@ -164,7 +165,7 @@ if DEBUG:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'mdjguyane',
-            'USER': 'paco@mdjguyane',
+            'USER': 'paco',
             'PASSWORD': 'PAPApadeo1',
             'HOST': 'mdjguyane.postgres.database.azure.com',
             'PORT': '5432',
@@ -180,7 +181,7 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'mdjguyane',
-            'USER': 'paco@mdjguyane',
+            'USER': 'paco',
             'PASSWORD': 'PAPApadeo1',
             'HOST': 'mdjguyane.postgres.database.azure.com',
             'PORT': '5432',

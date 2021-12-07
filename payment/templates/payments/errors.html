@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta chars="utf-8">
+    <title>erreur</title>
+</head>
+
+<body>
+
+{% if message == 1 %}
+Il faut que vous soyer inscrit au réseau étudiant pour bénéficier de nos service, cliquez <a href="{% url 'student' %}">ici</a> pour vous inscrire
+{% elif message == 2 %}
+Vous ne pouvez pas commander pour le moment !
+
+{%  endif %}
+</body>
+</html>

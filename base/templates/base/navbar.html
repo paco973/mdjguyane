@@ -15,8 +15,8 @@
 
             <div class="col-3 ">
                 <div class="site-logo">
-                    <a href="{% url 'home' %}">
-                        <img src="../../static/img/IMG_4092.PNG" style="width: 50%">
+                    <a href="{% url 'home' %}" style="width:100%">
+                        <img src="../../static/img/IMG_4092.PNG" class="col-auto" alt="logo">
                     </a>
                 </div>
             </div>
@@ -27,27 +27,19 @@
                         class="icon-menu h3 text-white"></span></a></span>
                 <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                     <ul class="site-menu main-menu js-clone-nav ml-auto">
+
                         {% if request.path == '/' %}
                             <li class="active"><a href="{% url 'home' %}" class="nav-link text-info">Accueil</a></li>
                         {% else %}
                             <li><a href="{% url 'home' %}" class="nav-link">Accueil</a></li>
                         {% endif %}
 
-                        <!--
-                        {% if request.path == '/member/' %}
-                        <li class="active"><a href="{% url 'member' %}" class="nav-link">Aides</a></li>
-                        {% else %}
-                        <li><a href="{% url 'member' %}" class="nav-link">Aides</a></li>
-                        {% endif %}
-
-
-                        {% if request.path == '/a' %}
+                       <!-- {% if request.path == '/a' %}
                         <li class="active"><a href="barber-shop.html" class="nav-link">Shop</a></li>
                         {% else %}
                         <li><a href="barber-shop.html" class="nav-link">Shop</a></li>
                         {% endif %}
                         -->
-
 
                         {% if request.path == '/about/' %}
                             <li class="active"><a href="{% url 'about' %}" class="nav-link">À propos</a></li>
@@ -83,16 +75,16 @@
                             </li>
                         {% endif %}
 
-                        {% if request.path == '/project/' %}
+                      {% if request.path == '/project/' %}
                             <li class="active"><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
                         {% else %}
                             <li><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
                         {% endif %}
 
-                        {% if request.path == '/contact/' %}
-                            <li class="active"><a href="{% url 'contact' %}" class="nav-link">Contacte</a></li>
+                       {% if request.path == '/contact/' %}
+                            <li class="active"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
                         {% else %}
-                            <li><a href="{% url 'contact' %}" class="nav-link">Contacte</a></li>
+                            <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
                         {% endif %}
                     </ul>
                 </nav>

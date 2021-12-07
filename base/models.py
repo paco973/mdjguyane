@@ -32,7 +32,7 @@ class City(models.Model):
 
 
 class Study(models.Model):
-    name = models.CharField(max_length=50, blank=False)
+    name = models.CharField(max_length=255, blank=False)
     description = models.TextField(blank=True, null=True, max_length=1250)
     date_created = models.DateTimeField(auto_now=True)
     date_modified = models.DateTimeField(auto_now_add=True)
@@ -57,6 +57,7 @@ class Student(models.Model):
     school = models.CharField(max_length=50, blank=False, null=True)
     study = models.ForeignKey(Study, on_delete=models.CASCADE, related_name='studies', null=False)
     level = models.ForeignKey(Level, on_delete=models.CASCADE, default=None)
+
     date_created = models.DateTimeField(auto_now=True)
     date_modified = models.DateTimeField(auto_now=True)
 
@@ -70,6 +71,7 @@ class Student(models.Model):
 
 
 class Volunteer(models.Model):
+
     last_name = models.CharField(max_length=50, blank=False, null=False)
     first_name = models.CharField(max_length=50, blank=False, null=False)
     birthday = models.DateField(blank=False, null=False)
@@ -142,8 +144,8 @@ class Role(models.Model):
 
 
 class MdjMember(models.Model):
-    last_name = models.CharField(max_length=20, blank=False, null=False, verbose_name='Prénom')
-    first_name = models.CharField(max_length=20, blank=True, null=True, verbose_name='Nom')
+    last_name = models.CharField(max_length=20, blank=False, null=False, verbose_name='Nom')
+    first_name = models.CharField(max_length=20, blank=True, null=True, verbose_name='Prénom')
     birthday = models.DateField(blank=True, null=True, verbose_name='Date_De_Naissance')
     description = models.TextField(blank=True, null=True, max_length=500, verbose_name='Description')
     role = models.ForeignKey(Role, on_delete=models.CASCADE, related_name='role', null=True, verbose_name='Role')
@@ -153,6 +155,7 @@ class MdjMember(models.Model):
     address = models.CharField(max_length=255, blank=False, null=False, verbose_name='Adresse')
     photo = models.ImageField(blank=True, null=True, upload_to='media/base/member', verbose_name='Photo')
     ordre = models.IntegerField(auto_created=True, verbose_name='Ordre', default=0)
+    active = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now=True)
     date_modified = models.DateTimeField(auto_now=True)
 
@@ -197,6 +200,7 @@ class Newsletter(models.Model):
         verbose_name_plural = 'Newsletters'
 
 
+'''
 class ProductCategory(models.Model):
     name = models.CharField(max_length=30, blank=False, null=False)
     quantity = models.IntegerField(blank=False, null=False)
@@ -226,5 +230,6 @@ class Product(models.Model):
         # managed = True
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+        '''
 
 

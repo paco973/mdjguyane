@@ -1,0 +1,80 @@
+
+
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <h2>Produit</h2>
+        </div>
+        <div class="card-body">
+            <div class="container row">
+                <div class="col-md-2">
+                    <img style="width: 100%; " src="https://produits.bienmanger.com/36259-0w470h470_Panier_Tour_France_Gastronomique.jpg" alt="">
+                </div>
+                <div class="col-md-10">
+                    <h1> Panier Solidaire</h1>
+
+                    <p>Prix:6 €</p>
+
+                    <div class="form-group">
+                        <label for="email">Email: </label>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                        <small>Entrez votre adresse email</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex">
+            <button class="btn btn-success ml-auto" id="checkout-button">Passer la commande</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe('{{ stripe_publishable_key }}');
+    var checkoutButton = document.getElementById('checkout-button');
+
+    checkoutButton.addEventListener('click', function () {
+
+        var email = document.getElementById('email').value;
+        if (email.length == 0) {
+            alert("Please enter your email address.");
+            return;
+        }
+
+        // Create a new Checkout Session using the server-side endpoint you
+        // created in step 3.
+        fetch("{% url 'api_checkout_session' %}", {
+            method: 'POST',
+            body: JSON.stringify(
+                { email: email, prix:6 }
+            )
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.sessionId });
+            })
+            .then(function (result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    });
+</script>
+{% endblock content %}
+
