@@ -11,6 +11,7 @@ class MemberForm(ModelForm):
             'first_name': TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Prénom'
+
             }),
 
             'email': EmailInput(attrs={
@@ -19,7 +20,7 @@ class MemberForm(ModelForm):
             }),
             'last_name': TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Nom'
+                'placeholder': 'Nom',
             }),
             'city': Select(attrs={
                 'class': 'form-control',
@@ -43,6 +44,7 @@ class MemberForm(ModelForm):
             }),
 
         }
+
     def __init__(self, *args, **kwargs):
         super(MemberForm, self).__init__(*args, **kwargs)
         self.fields['city'].queryset = City.objects.all().order_by('name')
@@ -62,7 +64,7 @@ class MemberForm(ModelForm):
                 'Minimum 2 characters required'])
         if len(last_name) < 2:
             self._errors['last_name'] = self.error_class([
-                 'Minimum 2 characters required'])
+                'Minimum 2 characters required'])
 
         # return any errors if found
         return self.cleaned_data

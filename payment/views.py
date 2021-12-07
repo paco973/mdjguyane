@@ -2,7 +2,8 @@ from django.http.response import HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 
-from base.models import MdjMember, City
+from base.models import MdjMember, City, Student
+from store.views import _cart_id
 from .models import *
 from django.views.generic import ListView, TemplateView
 import stripe
@@ -19,41 +20,93 @@ def create_checkout_session(request):
     member = MdjMember.objects.get(email=request_data['email'])
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    checkout_session = stripe.checkout.Session.create(
-        # Customer Email is optional,
-        # It is not safe to accept email directly from the client side
-        customer_email=request_data['email'],
-        payment_method_types=['card'],
-        line_items=[
-            {
-                'price_data': {
-                    'currency': 'eur',
-                    'product_data': {
-                        'name': member.role.name,
+    if len(request_data) > 1:
+        try:
+            student = Student.objects.get(email=request_data['email'])
+        except :
+            message = 1
+            return render(request, 'payments/errors.html', context={'message': message})
+
+        try:
+            order_verification = OrderDetail.objects.get(customer_email=request_data['email'], cart_id=_cart_id(request))
+            message= 2
+            if order_verification.cart:
+                return render(request, 'payments/errors.html', context={'message': message})
+        except:
+            pass
+
+        checkout_session = stripe.checkout.Session.create(
+            # Customer Email is optional,
+            # It is not safe to accept email directly from the client side
+            customer_email=request_data['email'],
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price_data': {
+                        'currency': 'eur',
+                        'product_data': {
+                            'name': 'Panier Solidaire',
+                        },
+                        'unit_amount': int(6 * 100),
                     },
-                    'unit_amount': int(member.role.nombre * 100),
-                },
-                'quantity': 1,
-            }
-        ],
-        mode='payment',
+                    'quantity': 1,
+                }
+            ],
+            mode='payment',
 
-        success_url=request.build_absolute_uri(
-            reverse('success')
-        ) + "?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url=request.build_absolute_uri(reverse('failed')),
-    )
+            success_url=request.build_absolute_uri(
+                reverse('success')
+            ) + "?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url=request.build_absolute_uri(reverse('failed')),
+        )
 
-    # OrderDetail.objects.create(
-    #     customer_email=email,
-    #     product=product, ......
-    # )
+        # OrderDetail.objects.create(
+        #     customer_email=email,
+        #     product=product, ......
+        # )
 
-    order = OrderDetail()
-    order.customer_email = request_data['email']
-    order.stripe_payment_intent = checkout_session['payment_intent']
-    order.amount = int(member.role.nombre * 100)
-    order.save()
+        order = OrderDetail()
+        order.cart = Cart.objects.get(cart_id=_cart_id(request))
+        order.customer_email = request_data['email']
+        order.stripe_payment_intent = checkout_session['payment_intent']
+        order.amount = int(member.role.nombre * 100)
+        order.save()
+    else:
+        checkout_session = stripe.checkout.Session.create(
+            # Customer Email is optional,
+            # It is not safe to accept email directly from the client side
+            customer_email=request_data['email'],
+            payment_method_types=['card'],
+            line_items=[
+                {
+                    'price_data': {
+                        'currency': 'eur',
+                        'product_data': {
+                            'name': member.role.name,
+                        },
+                        'unit_amount': int(member.role.nombre * 100),
+                    },
+                    'quantity': 1,
+                }
+            ],
+            mode='payment',
+
+            success_url=request.build_absolute_uri(
+                reverse('success')
+            ) + "?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url=request.build_absolute_uri(reverse('failed')),
+        )
+
+        # OrderDetail.objects.create(
+        #     customer_email=email,
+        #     product=product, ......
+        # )
+
+        order = OrderDetail()
+        order.customer_email = request_data['email']
+        order.stripe_payment_intent = checkout_session['payment_intent']
+        order.amount = int(6 * 100)
+        order.save()
 
     # return JsonResponse({'data': checkout_session})
     return JsonResponse({'sessionId': checkout_session.id})

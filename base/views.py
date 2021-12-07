@@ -1,3 +1,4 @@
+from os import abort
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
@@ -5,10 +6,10 @@ from .forms.StudentForm import StudentForm
 from .forms.NewsletterForm import NewsletterForm
 from .forms.MemberForm import MemberForm
 from django.conf import settings
-
+from django.core.exceptions import ValidationError
 
 from .models import Event, City, Student, EventByStudent, Volunteer, Study, Level, MdjMember, Message, Newsletter, \
-    ProductCategory, Product, Role
+    Role
 from blog.models import Post, PostCategory
 
 
@@ -85,14 +86,19 @@ def member(request):
                                                phone_number=form.cleaned_data['phone_number'], city=city, role=role
                                                )
             _member.save()
+            try:
+                send_mail(
+                    'Adhesion MDJ',
+                    "Bienvenu(e) dans l’association \n\nla MDJ Guyane Merci pour votre confiance et votre engagement "
+                    "au sein de la Maison Des Jeunes de Guyane.\nVous êtes désarmais Membre pour une durée de 364 "
+                    "jours.\n Par votre adhésion participez, au rayonnement des Jeunes de Guyane.",
+                    settings.DEFAULT_FROM_EMAIL,
+                    [form.cleaned_data['email']],
 
-            '''send_mail(
-                'Adhesion MDJ',
-                "Bienvenu(e) dans l’association \n\nla MDJ Guyane Merci pour votre confiance et votre engagement au sein de la Maison Des Jeunes de Guyane.\nVous êtes désarmais Membre pour une durée de 364 jours.\n Par votre adhésion participez, au rayonnement des Jeunes de Guyane.",
-                settings.DEFAULT_FROM_EMAIL,
-                [form.cleaned_data['email']],
+                )
 
-            )'''
+            except:
+                pass
 
             # redirect to a new URL:
             return render(request, "payments/product_detail.html",
@@ -140,14 +146,19 @@ def student(request):
                                               phone_number=form.cleaned_data['phone_number'],
                                               school=form.cleaned_data['school'], study=study, level=level, city=city)
             _student.save()
+            try:
+                send_mail(
+                    'Réseau Étudiant MDJ',
+                    "Bienvenu(e) au Réseau Etudiant de Guyane \n\nCe réseau est outil pour les étudiants de Guyane hors "
+                    "du territoire.\nMerci pour la confiance accordée à ce réseau étudiant, nous vous souhaitons dores et "
+                    "déjà nos voeux de réussite pour votre formation d’enseignement supérieur.\n\nVotre Section locale de "
+                    "l’association vous sera communiqué dans un prochain mail.",
+                    settings.DEFAULT_FROM_EMAIL,
+                    [form.cleaned_data['email']],
 
-            '''send_mail(
-                'Réseau Étudiant MDJ',
-                "Bienvenu(e) au Réseau Etudiant de Guyane \n\nCe réseau est outil pour les étudiants de Guyane hors du territoire.\nMerci pour la confiance accordée à ce réseau étudiant, nous vous souhaitons dores et déjà nos voeux de réussite pour votre formation d’enseignement supérieur.\n\nVotre Section locale de l’association vous sera communiqué dans un prochain mail.",
-                settings.DEFAULT_FROM_EMAIL,
-                [form.cleaned_data['email']],
-
-            )'''
+                )
+            except:
+                pass
 
             return redirect('home')
 
@@ -229,22 +240,24 @@ def project(request):
 
 
 def sendmail(request):
-
     if request.method == 'POST':
-        send_mail(
-            'Accusé de réception MDJ Guyane',
-            'Merci pour votre message, celui-ci sera traité dans les meilleurs délais.',
-            settings.DEFAULT_FROM_EMAIL,
-            [request.POST['mail']],
-        )
+        try:
 
-        message = Message.objects.create(first_name=request.POST['name'], last_name=request.POST['nom'],
-                                         email=request.POST['mail'], message=request.POST['message'],
-                                         )
-        message.save()
+            send_mail(
+                'Accusé de réception MDJ Guyane',
+                'Merci pour votre message, celui-ci sera traité dans les meilleurs délais.',
+                settings.DEFAULT_FROM_EMAIL,
+                [request.POST['mail']],
+            )
+
+            message = Message.objects.create(first_name=request.POST['name'], last_name=request.POST['nom'],
+                                             email=request.POST['mail'], message=request.POST['message'],
+                                             )
+            message.save()
+        except:
+            pass
 
         return redirect('home')
-
     else:
         formFooter = NewsletterForm
         context = {
@@ -276,6 +289,7 @@ def cancel(request):
     return render(request, 'base/cancel.html')
 
 
+'''
 def shop(request):
     product_categories = ProductCategory.objects.all()
     categories = {}
@@ -294,3 +308,4 @@ def shop(request):
         'categories': categories
     }
     return render(request, 'base/shop.html', context)
+'''

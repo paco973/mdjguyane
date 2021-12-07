@@ -1,6 +1,8 @@
 from django.db import models
 from django.core import validators
 
+from store.models import Cart
+
 
 class OrderDetail(models.Model):
     id = models.BigAutoField(
@@ -26,6 +28,7 @@ class OrderDetail(models.Model):
         verbose_name='Payment Status'
     )
 
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
     created_on = models.DateTimeField(
         auto_now_add=True
     )
@@ -33,3 +36,6 @@ class OrderDetail(models.Model):
     updated_on = models.DateTimeField(
         auto_now_add=True
     )
+
+    def __str__(self):
+        return self.customer_email
