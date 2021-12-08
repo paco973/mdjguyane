@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}
-    Home
+    Contactez Nous
 {% endblock %}
 
 
@@ -25,7 +25,7 @@
         <div class="container">
             <div class="row mb-2">
                 <div class="col-8  mb-6">
-                    <strong><h3 class="text-info">Contacter La Maison Des jeunes De Guyane</h3></strong>
+                   <h3 class="text-info"><strong>Contacter La Maison Des jeunes De Guyane</strong></h3>
                 </div>
             </div>
             <div class="row">
@@ -34,7 +34,9 @@
                         {% csrf_token %}
                         <div class="form-group row">
                             <div class="col-md-6 mb-4 mb-lg-0">
-                                <input type="text" class="form-control" placeholder="Prénom" name="name">
+                                <label>
+                                    <input type="text" class="form-control" placeholder="Prénom" name="name">
+                                </label>
                             </div>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" placeholder="Nom" name="nom">
