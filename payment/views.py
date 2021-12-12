@@ -17,19 +17,23 @@ import json
 @csrf_exempt
 def create_checkout_session(request):
     request_data = json.loads(request.body)
-    member = MdjMember.objects.get(email=request_data['email'])
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
     if len(request_data) > 1:
+
         try:
             student = Student.objects.get(email=request_data['email'])
-        except :
+
+        except:
+
             message = 1
+            return 1
             return render(request, 'payments/errors.html', context={'message': message})
 
         try:
-            order_verification = OrderDetail.objects.get(customer_email=request_data['email'], cart_id=_cart_id(request))
-            message= 2
+            order_verification = OrderDetail.objects.get(customer_email=request_data['email'],
+                                                         cart_id=_cart_id(request))
+            message = 2
             if order_verification.cart:
                 return render(request, 'payments/errors.html', context={'message': message})
         except:
@@ -67,11 +71,17 @@ def create_checkout_session(request):
 
         order = OrderDetail()
         order.cart = Cart.objects.get(cart_id=_cart_id(request))
-        order.customer_email = request_data['email']
+        order.customer_email = student.email
         order.stripe_payment_intent = checkout_session['payment_intent']
-        order.amount = int(member.role.nombre * 100)
+        order.amount = int(6 * 100)
         order.save()
     else:
+
+        try:
+            member = MdjMember.objects.get(email=request_data['email'])
+        except:
+            return redirect('member')
+
         checkout_session = stripe.checkout.Session.create(
             # Customer Email is optional,
             # It is not safe to accept email directly from the client side

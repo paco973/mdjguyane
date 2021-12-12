@@ -58,9 +58,12 @@
             )
         })
             .then(function (response) {
+                alert(response.text);
+
                 return response.json();
             })
             .then(function (session) {
+                alert(response.json());
                 return stripe.redirectToCheckout({ sessionId: session.sessionId });
             })
             .then(function (result) {

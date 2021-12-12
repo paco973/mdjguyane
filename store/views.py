@@ -101,4 +101,10 @@ def shop(request):
 
 
 def payer(request):
-    return render(request, 'store/product_detail.html', context={'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY})
+    return render(request, 'store/product_detail.html',
+                  context={'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY})
+
+
+def commande(request):
+
+    return render(request, 'store/commande.html')

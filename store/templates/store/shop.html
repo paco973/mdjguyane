@@ -24,6 +24,7 @@
 
     <div class="site-section bg-light">
         <div class="container">
+
             {% for key, category in categories.items %}
 
                 <div class="row justify-content-center mb-5 ">
@@ -33,14 +34,32 @@
                     </div>
                 </div>
 
-                <div class="row hair-style mb-3">
+                <div class="row hair-style mb-3 d-flex justify-content-start">
                     {% for product  in category.product %}
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                      <!--  <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                             <a href="#" class="place">
                                 <img src="{{ product.image.url }}" alt="{{ product.name }}">
                                 <h2>{{ product.name }}</h2>
                                 <span>{{ product.quantity }}</span>
                             </a>
+                        </div>-->
+
+                        <div class="col-9 mx-auto col-md-6 col-lg-3">
+                            <div class="card mb-4" style="border-color: transparent;">
+                                <div class="p-4">
+
+                                    <img src="{{ product.image.url }}" class="card-img-top" alt="product.name">
+
+
+                                </div>
+                                <div class="card-footer d-flex justify-content-between"
+                                     style="background: transparent; border-color: transparent;">
+                                    <p class="font-weight-bold mb-0">
+                                        {{ product.name }}
+                                    </p>
+
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -48,7 +67,7 @@
         </div>
 
 
-        <div class="d-flex justify-content-end p-5" >
+        <div class="d-flex justify-content-end p-5">
             <a class="btn btn-info mr-5" href="{% url 'cart_detail' %}">Composer mon panier</a>
         </div>
     </div>
