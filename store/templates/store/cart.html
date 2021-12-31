@@ -1,145 +1,233 @@
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta chars="utf-8"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static  'css/card.css' %}">
-    <link rel="stylesheet" href="{% static  'css/base.css' %}">
-</head>
-<body>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<div class="ftco-blocks-cover-1">
+{% block content %}
 
-    {% if not cart_items %}
+    <div>
 
-        <div class="text-center">
-            <br>
-            <h1 class="text-center product_title">
-                Your Shopping Cart is Empty
-            </h1>
-            <br>
-            <p class="text-center">
-                Please click <a href="{% url 'home' %}">here</a> to continue shopping
-            </p>
-        </div>
-    {% else %}
-        <div class="text-center">
-            <br>
-            <div class="text-center product_title">
-                <h1>Ton panier</h1>
+        {% if not cart_items %}
+
+            <div class="text-center">
+                <br>
+                <h1 class="text-center product_title">
+                    Your Shopping Cart is Empty
+                </h1>
+                <br>
+                <p class="text-center">
+                    Please click <a href="{% url 'home' %}">here</a> to continue shopping
+                </p>
             </div>
-            <div class="row mx-auto mt-5">
-                <div class="col-12 col-md-12 col-lg-6 text-center">
-                    <table class="table cart_table">
-                        {% for category in categorys %}
+        {% else %}
+            <div class="text-center">
+                <br>
+                <div class="text-center product_title">
+                    <h1>Mon panier</h1>
+                </div>
+                <div class="row mx-auto mt-5">
+                    <div class="col-12 col-md-12 col-lg-12 text-center">
+                        <table class="table cart_table">
+                            {% for category in categorys %}
+                                <thead class=" cart_thead">
+                                <tr>
+                                    <th colspan="4">
+                                        {{ category.name }} max {{ category.quantity }}
+                                    </th>
+                                </tr>
+                                </thead>
+                                {% for cart_item in cart_items %}
+                                    {% if category.name == cart_item.product.category.name %}
+                                        <tr class="mt-2">
+                                            <td>
+
+                                                <img width="100" height="100" src="{{ cart_item.product.image.url }}"
+                                                     alt="">
+                                            </td>
+                                            <td class="text-left p-2">
+                                               <p> {{ cart_item.product.name }}</p>
+                                                <p id="{{ cart_item.product.name }}">
+
+                                                    Quantité: {{ cart_item.quantity }}
+                                                </p>
+                                                <p style="visibility: hidden" class="{{ cart_item.product.category.slug }}">
+                                                    Quantité total restant: {{ cart_item.category_stock.stock }}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                Quantité max: {{ cart_item.product.stock }}
+                                            </td>
+
+
+                                            <td class="d-flex justify-content-between">
+                                                <!--<a class="btn btn-primary"
+                                                   href="{% url 'add_cart' cart_item.product.id %}">
+                                                    <i class="fas fa-plus-circle cart_icon ">+</i>
+                                                </a>-->
+                                                <button class="btn btn-success" onclick="pop({{ cart_item.product.id }} )">
+                                                    <i class="fas fa-plus-circle cart_icon ">+</i>
+                                                </button>
+
+
+                                                <button class="btn btn-danger {{ category.name }}"
+                                                        onclick="poppp({{ cart_item.product.id }} )"
+                                                        id="{{ cart_item.product.id }}">
+                                                    -
+                                                </button>
+
+
+                                            </td>
+
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12 text-center">
+                        <table class="table cart_table">
                             <thead class=" cart_thead">
                             <tr>
                                 <th colspan="4">
-                                    {{ category.name }} max {{ category.quantity }}
+                                    Check
                                 </th>
                             </tr>
                             </thead>
-                            {% for cart_item in cart_items %}
-                                {% if category.name == cart_item.product.category.name %}
-                                    <tr class="mt-2">
-                                        <td>
-                                            <a href="cart_item.product.get_url">
-                                                <img width="100" height="100" src="{{ cart_item.product.image.url }}"
-                                                     alt="">
-                                            </a>
-                                        </td>
-                                        <td class="text-left p-2">
-                                            {{ cart_item.product.name }}
-                                            <br>
-                                            Quantité: {{ cart_item.quantity }} x
-                                            <br>
+                            <tbody>
+                            <tr>
+                                <td>
 
-                                            {{ cart_item.category_stock.stock }}
+                                    Veillez verifier son panier avant des procéder au payment !
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Total: <strong>6€</strong>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="mx-auto text-black mb-5">
 
-                                        </td>
-                                        <td>
-                                            Quantité max: {{ cart_item.product.stock }}
-                                        </td>
-                                        {% if cart_item.quantity < cart_item.product.stock %}
-                                            {% if cart_item.category_stock.stock  > 0 %}
-                                                <td class="d-flex justify-content-between">
-                                                    <a class="btn btn-primary"
-                                                       href="{% url 'add_cart' cart_item.product.id %}">
-                                                        <i class="fas fa-plus-circle cart_icon ">+</i>
-                                                    </a>
-                                                    {% if cart_item.quantity > 0 %}
-
-                                                        <a class="btn btn-danger"
-                                                           href="{% url 'cart_remove' cart_item.product.id %}">
-                                                            <i class="fas fa-minus-circle">-</i>
-                                                        </a>
-
-                                                    {% endif %}
-                                                </td>
-                                            {% else %}
-                                                {% if cart_item.quantity > 0 %}
-                                                    <td>
-                                                        <a class="btn btn-danger"
-                                                           href="{% url 'cart_remove' cart_item.product.id %}">
-                                                            <i class="fas fa-minus-circle">-</i>
-                                                        </a>
-                                                    </td>
-                                                {% endif %}
-                                            {% endif %}
-                                        {% else %}
-                                            {% if cart_item.quantity > 0 %}
-                                                <td>
-                                                    <a class="btn btn-danger"
-                                                       href="{% url 'cart_remove' cart_item.product.id %}">
-                                                        <i class="fas fa-minus-circle">-</i>
-                                                    </a>
-                                                </td>
-                                            {% endif %}
-                                        {% endif %}
-
-                                    </tr>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </table>
-                </div>
-                <div class="col-12 col-md-12 col-lg-6 text-center">
-                    <table class="table cart_table">
-                        <thead class=" cart_thead">
-                        <tr>
-                            <th colspan="4">
-                                Check
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-
-                                Veillez verifier son panier avant des procéder au payment !
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">
-                                Total: <strong>5€</strong>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="mx-auto">
-
-                        <a href="{% url 'payer' %}" type="button" class="btn btn-lg btn-block bg-dark btn-dark text-white">
-                            Payer
-                        </a>
+                            <a href="{% url 'payer' %}" type="button" class="btn btn-lg btn-block  btn-info text-black">
+                                Payer
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 
-</body>
-</html>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script type="text/javascript">
+        function poppp(id = null) {
+            url = 'https://www.mdjguyane.com/store/cart/remove/' + id;
+
+            fetch(url, {
+                method: 'POST',
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.status === false) {
+
+                        if (data.category === data.quantity) {
+                            let product = document.getElementById(data.product_name);
+                            let divs = document.getElementsByClassName(data.name);
+                            let cat = document.getElementsByClassName(data.cat);
+                            product.textContent = "Quantité: " + data.product;
+
+                           /* for (let i = 0; i < divs.length; i++) {
+                                divs[i].setAttribute('style', 'display:none;');
+                            }*/
+
+                            for (let i = 0; i < cat.length; i++) {
+                                cat[i].textContent = "Quantité total restant: " + data.category;
+                            }
+
+                        } else {
+                            let product = document.getElementById(data.product_name);
+                            let div = document.getElementById(id);
+                            product.textContent = "Quantité: " + data.product;
+                            //div.setAttribute('style', 'display:none;');
+
+                            let cat = document.getElementsByClassName(data.cat);
+                            for (let i = 0; i < cat.length; i++) {
+                                cat[i].textContent = "Quantité total restant: " + data.category;
+                            }
+                        }
+                    } else  {
+                        let product = document.getElementById(data.product_name);
+                        product.textContent = "Quantité: " + data.product;
+
+                        let cat = document.getElementsByClassName(data.cat);
+                        for (let i = 0; i < cat.length; i++) {
+                            cat[i].textContent = "Quantité total restant: " + data.category;
+                        }
+                    }
+                })
+                .catch(e => {
+                    alert(e);
+                    console.log(e);
+                })
+        }
+
+
+         function pop(id = null) {
+            url = 'https://www.mdjguyane.com/store/cart/add/' + id;
+
+            fetch(url, {
+                method: 'POST',
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+
+                    if (data.status === false) {
+
+                        if (data.category === 0) {
+                            let product = document.getElementById(data.product_name);
+                            // let divs = document.getElementsByClassName(data.name);
+                            let cat = document.getElementsByClassName(data.cat);
+                            product.textContent = "Quantité: " + data.product;
+
+                           /* for (let i = 0; i < divs.length; i++) {
+                                divs[i].setAttribute('style', 'display:none;');
+                            }*/
+
+                            for (let i = 0; i < cat.length; i++) {
+                                cat[i].textContent = "Quantité total restant: " + data.category;
+                            }
+
+                        } else {
+                            let product = document.getElementById(data.product_name);
+                            let div = document.getElementById(id);
+                            product.textContent = "Quantité: " + data.product;
+                           // div.setAttribute('style', 'display:none;');
+
+                            let cat = document.getElementsByClassName(data.cat);
+                            for (let i = 0; i < cat.length; i++) {
+                                cat[i].textContent = "Quantité total restant: " + data.category;
+                            }
+                        }
+                    } else  {
+                        let product = document.getElementById(data.product_name);
+                        product.textContent = "Quantité: " + data.product;
+
+                        let cat = document.getElementsByClassName(data.cat);
+                        for (let i = 0; i < cat.length; i++) {
+                            cat[i].textContent = "Quantité total restant: " + data.category;
+                        }
+                    }
+                })
+                .catch(e => {
+                    alert(e);
+                    console.log(e);
+                })
+        }
+    </script>
+{% endblock content %}
 

@@ -10,6 +10,7 @@ class Category(models.Model):
     quantity = models.IntegerField(blank=False, null=False)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='category', blank=True)
+    order = models.IntegerField(default=10000000)
 
     class Meta:
         ordering = ('name',)
@@ -78,6 +79,7 @@ class CartItem(models.Model):
     # stock = models.IntegerField(default=0)
     category_stock = models.ForeignKey(CategoryStock, on_delete=models.CASCADE, null=True)
     active = models.BooleanField(default=True)
+
 
     class Meta:
         verbose_name = 'CartItem'

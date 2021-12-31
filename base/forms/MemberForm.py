@@ -1,11 +1,14 @@
+from random import choices
+
 from django.forms import ModelForm, TextInput, EmailInput, Select, DateInput
 from base.models import MdjMember, City
 
 
 class MemberForm(ModelForm):
     class Meta:
+
         model = MdjMember
-        fields = ["first_name", "email", 'last_name', 'birthday', 'city', 'phone_number', 'address']
+        fields = ["first_name", "email", 'last_name', 'birthday', 'city', 'phone_number', 'address', 'profession']
 
         widgets = {
             'first_name': TextInput(attrs={
@@ -42,6 +45,7 @@ class MemberForm(ModelForm):
                 'placeholder': 'Adresse',
 
             }),
+
 
         }
 

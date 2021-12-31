@@ -9,6 +9,11 @@ class OrderDetail(models.Model):
         primary_key=True
     )
 
+    identifiant = models.CharField(
+        max_length=100,
+        null=True,
+    )
+
     # You can change as a Foreign Key to the user model
     customer_email = models.EmailField(
         verbose_name='Customer Email'

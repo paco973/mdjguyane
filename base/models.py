@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.urls import reverse
 
@@ -71,7 +73,6 @@ class Student(models.Model):
 
 
 class Volunteer(models.Model):
-
     last_name = models.CharField(max_length=50, blank=False, null=False)
     first_name = models.CharField(max_length=50, blank=False, null=False)
     birthday = models.DateField(blank=False, null=False)
@@ -156,6 +157,10 @@ class MdjMember(models.Model):
     photo = models.ImageField(blank=True, null=True, upload_to='media/base/member', verbose_name='Photo')
     ordre = models.IntegerField(auto_created=True, verbose_name='Ordre', default=0)
     active = models.BooleanField(default=False)
+    profession = models.CharField(max_length=50, default="Étudiant")
+    indentifiant = models.CharField(max_length=100, default=uuid.uuid4(), null=True)
+    parrain = models.CharField(max_length=100,  default='NC', null=True)
+    code_parrain = models.CharField(max_length=100,  default='NC', null=True)
     date_created = models.DateTimeField(auto_now=True)
     date_modified = models.DateTimeField(auto_now=True)
 
@@ -198,38 +203,3 @@ class Newsletter(models.Model):
         # managed = True
         verbose_name = 'Newsletter'
         verbose_name_plural = 'Newsletters'
-
-
-'''
-class ProductCategory(models.Model):
-    name = models.CharField(max_length=30, blank=False, null=False)
-    quantity = models.IntegerField(blank=False, null=False)
-    date_created = models.DateTimeField(auto_now=True)
-    date_modified = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        # managed = True
-        verbose_name = 'ProductCategory'
-        verbose_name_plural = 'ProductCategory'
-
-
-class Product(models.Model):
-    name = models.CharField(max_length=30, blank=False, null=False)
-    quantity = models.IntegerField(blank=False, null=False)
-    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
-    date_created = models.DateTimeField(auto_now=True)
-    date_modified = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        # managed = True
-        verbose_name = 'Product'
-        verbose_name_plural = 'Products'
-        '''
-
-

@@ -1,10 +1,12 @@
+import uuid
 from os import abort
+
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from .forms.StudentForm import StudentForm
 from .forms.NewsletterForm import NewsletterForm
-from .forms.MemberForm import MemberForm
+from .forms.MemberForm import MemberForm    
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
@@ -14,6 +16,12 @@ from blog.models import Post, PostCategory
 
 
 def home(request):
+
+    mdj_members = MdjMember.objects.all()
+
+    for mdj_member in mdj_members:
+        mdj_member.indent = uuid.uuid4()
+        mdj_member.save()
     posts = Post.objects.filter(published=True).order_by('date_created')[:3]
 
     if request.method == 'POST':
@@ -83,15 +91,18 @@ def member(request):
                                                last_name=form.cleaned_data['last_name'],
                                                email=form.cleaned_data['email'], address=form.cleaned_data['address'],
                                                birthday=form.cleaned_data['birthday'],
-                                               phone_number=form.cleaned_data['phone_number'], city=city, role=role
+                                               phone_number=form.cleaned_data['phone_number'], city=city, role=role,
+                                               profession=request.POST['profession'], code_parrain=request.POST['code_parrain']
                                                )
             _member.save()
             try:
                 send_mail(
                     'Adhesion MDJ',
-                    "Bienvenu(e) dans l’association \n\nla MDJ Guyane Merci pour votre confiance et votre engagement "
-                    "au sein de la Maison Des Jeunes de Guyane.\nVous êtes désarmais Membre pour une durée de 364 "
-                    "jours.\n Par votre adhésion participez, au rayonnement des Jeunes de Guyane.",
+                    "Bienvenu(e) dans l’association" 
+                    "la MDJ Guyane Merci pour votre confiance et votre engagement"
+                    "au sein de la Maison Des Jeunes de Guyane."
+                    "Vous êtes désarmais Membre pour une durée de 364 jours." 
+                    "Par votre adhésion participez, au rayonnement des Jeunes de Guyane.",
                     settings.DEFAULT_FROM_EMAIL,
                     [form.cleaned_data['email']],
 
@@ -149,9 +160,11 @@ def student(request):
             try:
                 send_mail(
                     'Réseau Étudiant MDJ',
-                    "Bienvenu(e) au Réseau Etudiant de Guyane \n\nCe réseau est outil pour les étudiants de Guyane hors "
-                    "du territoire.\nMerci pour la confiance accordée à ce réseau étudiant, nous vous souhaitons dores et "
-                    "déjà nos voeux de réussite pour votre formation d’enseignement supérieur.\n\nVotre Section locale de "
+                    "Bienvenu(e) au Réseau Etudiant de Guyane"
+                    "Ce réseau est outil pour les étudiants de Guyane hors du territoire."
+                    "Merci pour la confiance accordée à ce réseau étudiant, nous vous souhaitons dores et déjà "
+                    "nos voeux de réussite pour votre formation d’enseignement supérieur."
+                    "Votre Section locale de "
                     "l’association vous sera communiqué dans un prochain mail.",
                     settings.DEFAULT_FROM_EMAIL,
                     [form.cleaned_data['email']],
@@ -284,28 +297,3 @@ def project_detail(request, post_id):
 def success(request):
     return render(request, 'base/success.html')
 
-
-def cancel(request):
-    return render(request, 'base/cancel.html')
-
-
-'''
-def shop(request):
-    product_categories = ProductCategory.objects.all()
-    categories = {}
-    for product_category in product_categories:
-        categories[product_category.name] = {
-            'product': Product.objects.filter(category=product_category),
-            'total': len(Product.objects.filter(category=product_category)),
-
-        }
-
-    print(categories[product_category.name]['total'])
-
-    context = {
-        'coutn': 0,
-        'product_categories': product_categories,
-        'categories': categories
-    }
-    return render(request, 'base/shop.html', context)
-'''

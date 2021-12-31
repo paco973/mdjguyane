@@ -22,27 +22,25 @@ def create_checkout_session(request):
     if len(request_data) > 1:
 
         try:
-            student = Student.objects.get(email=request_data['email'])
-
+            user = MdjMember.objects.get(indentifiant=request_data['email'])
         except:
-
-            message = 1
-            return 1
-            return render(request, 'payments/errors.html', context={'message': message})
+            return JsonResponse({'message': "paco"})
 
         try:
-            order_verification = OrderDetail.objects.get(customer_email=request_data['email'],
-                                                         cart_id=_cart_id(request))
+            order_verification = OrderDetail.objects.get(
+                indentifiant=request_data['email'],
+                cart_id=_cart_id(request),
+                has_paid=False
+            )
             message = 2
-            if order_verification.cart:
-                return render(request, 'payments/errors.html', context={'message': message})
         except:
             pass
+            # return JsonResponse({'message': "paco"})
 
         checkout_session = stripe.checkout.Session.create(
             # Customer Email is optional,
             # It is not safe to accept email directly from the client side
-            customer_email=request_data['email'],
+            customer_email=user.email,
             payment_method_types=['card'],
             line_items=[
                 {
@@ -71,7 +69,7 @@ def create_checkout_session(request):
 
         order = OrderDetail()
         order.cart = Cart.objects.get(cart_id=_cart_id(request))
-        order.customer_email = student.email
+        order.customer_email = user.email
         order.stripe_payment_intent = checkout_session['payment_intent']
         order.amount = int(6 * 100)
         order.save()

@@ -22,9 +22,9 @@
                     <p>Prix:6 €</p>
 
                     <div class="form-group">
-                        <label for="email">Email: </label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Email">
-                        <small>Entrez votre adresse email</small>
+                        <label for="email">identifiant: </label>
+                        <input type="text" name="email" id="email" class="form-control" placeholder="identifiant">
+                        <small>Entrez votre identifiant</small>
                     </div>
                 </div>
             </div>
@@ -43,8 +43,8 @@
 
     checkoutButton.addEventListener('click', function () {
 
-        var email = document.getElementById('email').value;
-        if (email.length == 0) {
+        let email = document.getElementById('email').value;
+        if (email.length === 0) {
             alert("Please enter your email address.");
             return;
         }
@@ -58,12 +58,13 @@
             )
         })
             .then(function (response) {
-                alert(response.text);
-
                 return response.json();
             })
             .then(function (session) {
-                alert(response.json());
+                if (session.message)
+                {
+                    location.href = "https://www.mdjguyane.com/store/test";
+                }
                 return stripe.redirectToCheckout({ sessionId: session.sessionId });
             })
             .then(function (result) {
