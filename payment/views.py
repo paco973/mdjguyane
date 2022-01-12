@@ -20,12 +20,10 @@ def create_checkout_session(request):
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
     if len(request_data) > 1:
-
         try:
             user = MdjMember.objects.get(indentifiant=request_data['email'])
         except:
             return JsonResponse({'message': "paco"})
-
         try:
             order_verification = OrderDetail.objects.get(
                 indentifiant=request_data['email'],

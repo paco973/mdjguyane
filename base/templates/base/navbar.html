@@ -30,7 +30,7 @@
                         {% if request.path == '/' %}
                             <li class="active"><a href="{% url 'home' %}" class="nav-link text-info">Accueil</a></li>
                         {% else %}
-                            <li><a href="{% url 'home' %}" class="nav-link">Accueil</a></li>
+                            <li><a style="color: grey; font-weight:bold;" href="{% url 'home' %}" class="nav-link">Accueil</a></li>
                         {% endif %}
 
                         <!-- {% if request.path == '/a' %}
@@ -110,13 +110,13 @@
                         {% if request.path == '/project/' %}
                             <li class="active"><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
                         {% else %}
-                            <li><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
+                            <li><a style="color: grey; font-weight:bold;" href="{% url 'project' %}" class="nav-link">Actualité</a></li>
                         {% endif %}
 
                         {% if request.path == '/contact/' %}
                             <li class="active"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
                         {% else %}
-                            <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+                            <li><a style="color: grey; font-weight:bold;" href="{% url 'contact' %}" class="nav-link">Contact</a></li>
                         {% endif %}
                     </ul>
                 </nav>

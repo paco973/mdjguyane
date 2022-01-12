@@ -19,6 +19,6 @@ urlpatterns = [
     path('gestionVol/', views.getVolunteer, name='gestionVol'),
     path('contact/', views.contact, name='contact'),
     path('success/', views.success, name='success'),
-    path('cancel/', views.cancel, name='cancel'),
+    # path('cancel/', views.cancel, name='cancel'),
     path('sendmail/', views.sendmail, name='sendmail'),
 ]
