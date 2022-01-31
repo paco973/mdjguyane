@@ -30,15 +30,9 @@
                         {% if request.path == '/' %}
                             <li class="active"><a href="{% url 'home' %}" class="nav-link text-info">Accueil</a></li>
                         {% else %}
-                            <li><a style="color: grey; font-weight:bold;" href="{% url 'home' %}" class="nav-link">Accueil</a></li>
+                            <li><a style="color: grey; font-weight:bold;" href="{% url 'home' %}" class="nav-link">Accueil</a>
+                            </li>
                         {% endif %}
-
-                        <!-- {% if request.path == '/a' %}
-                        <li class="active"><a href="barber-shop.html" class="nav-link">Shop</a></li>
-                        {% else %}
-                        <li><a href="barber-shop.html" class="nav-link">Shop</a></li>
-                        {% endif %}
-                        -->
 
                         {% if request.path == '/about/' or request.path == '/store/' %}
                             <li>
@@ -83,10 +77,10 @@
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rejoindre</a>
                                     <div class="dropdown-menu" aria-labelledby="deroulanta">
                                         <a class="dropdown-item" href="{% url 'member' %}">
-                                            Section
+                                            Nous rejoindre
                                         </a>
                                         <a class="dropdown-item text-black" href="{% url 'student' %}">
-                                            Épicerie Solidaire
+                                            Rejoindre le réseau étudiant
                                         </a>
                                     </div>
                                 </div>
@@ -110,13 +104,15 @@
                         {% if request.path == '/project/' %}
                             <li class="active"><a href="{% url 'project' %}" class="nav-link">Actualité</a></li>
                         {% else %}
-                            <li><a style="color: grey; font-weight:bold;" href="{% url 'project' %}" class="nav-link">Actualité</a></li>
+                            <li><a style="color: grey; font-weight:bold;" href="{% url 'project' %}" class="nav-link">Actualité</a>
+                            </li>
                         {% endif %}
 
                         {% if request.path == '/contact/' %}
                             <li class="active"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
                         {% else %}
-                            <li><a style="color: grey; font-weight:bold;" href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+                            <li><a style="color: grey; font-weight:bold;" href="{% url 'contact' %}" class="nav-link">Contact</a>
+                            </li>
                         {% endif %}
                     </ul>
                 </nav>
